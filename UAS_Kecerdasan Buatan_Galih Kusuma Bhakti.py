@@ -353,43 +353,43 @@ class Temperature(BaseFuzzy) :
     
   def _inferensi(self, spd=Speed(), pres=Pressure()):
     result = []
-    # [R1] Jika Speed SLOW, dan Pressure VERY LOW, maka output Temprature HOT.
+    # [R1] Jika Speed SLOW, dan Pressure VERY LOW, maka output Temperature HOT.
     a1 = min(spd.slow(self.speed), pres.veryLow(self.pressure))
     z1 = self._hot(a1)
     result.append((a1, z1))
-    # [R2] Jika Speed STEADY, dan Pressure VERY LOW, maka output Temprature HOT.
+    # [R2] Jika Speed STEADY, dan Pressure VERY LOW, maka output Temperature HOT.
     a2 = min(spd.steady(self.speed), pres.veryLow(self.pressure))
     z2 = self._hot(a2)
     result.append((a2, z2))
-    # [R3] JIKA Speed FAST, dan Pressure VERY LOW, MAKA output Temprature HOT.
+    # [R3] JIKA Speed FAST, dan Pressure VERY LOW, MAKA output Temperature HOT.
     a3 = min(spd.fast(self.speed), pres.veryLow(self.pressure))
     z3 = self._hot(a3)
     result.append((a3, z3))
-    # [R4] JIKA Speed SLOW, dan Pressure LOW, MAKA output Temprature HOT.
+    # [R4] JIKA Speed SLOW, dan Pressure LOW, MAKA output Temperature HOT.
     a4 = min(spd.slow(self.speed), pres.low(self.pressure))
     z4 = self._hot(a4)
     result.append((a4, z4))
-    # [R5] Jika Speed STEADY, dan Pressure LOW, maka output Temprature WARM.
+    # [R5] Jika Speed STEADY, dan Pressure LOW, maka output Temperature WARM.
     a5 = min(spd.steady(self.speed), pres.low(self.pressure))
     z5 = self._warm(a5)
     result.append((a5, z5))
-    # [R6] Jika Speed FAST, dan Pressure LOW, maka output Temprature WARM.
+    # [R6] Jika Speed FAST, dan Pressure LOW, maka output Temperature WARM.
     a6 = min(spd.fast(self.speed), pres.low(self.pressure))
     z6 = self._warm(a6)
     result.append((a6, z6))
-    # [R7] Jika Speed SLOW, dan Pressure MEDIUM, maka output Temprature WARM.
+    # [R7] Jika Speed SLOW, dan Pressure MEDIUM, maka output Temperature WARM.
     a7 = min(spd.slow(self.speed), pres.medium(self.pressure))
     z7 = self._warm(a7)
     result.append((a7, z7))
-    # [R8] Jika Speed STEADY, dan Pressure MEDIUM, maka output Temprature WARM.
+    # [R8] Jika Speed STEADY, dan Pressure MEDIUM, maka output Temperature WARM.
     a8 = min(spd.steady(self.speed), pres.medium(self.pressure))
     z8 = self._warm(a8)
     result.append((a8, z8))
-    # [R9] Jika Speed FAST, dan Pressure MEDIUM, maka output Temprature COLD.
+    # [R9] Jika Speed FAST, dan Pressure MEDIUM, maka output Temperature COLD.
     a9 = min(spd.fast(self.speed), pres.medium(self.pressure))
     z9 = self._cold(a9)
     result.append((a9, z9))
-    # [R10] Jika Speed SLOW, dan Pressure HIGH, Mmaka output Temprature COLD.
+    # [R10] Jika Speed SLOW, dan Pressure HIGH, Mmaka output Temperature COLD.
     a10 = min(spd.slow(self.speed), pres.high(self.pressure))
     z10 = self._cold(a10)
     result.append((a10, z10))
