@@ -105,7 +105,6 @@ class Speed(BaseFuzzy):
             ax.plot(x_param, y_fastvalue, color='C2')
 
 class Pressure(BaseFuzzy):
-
     def __init__(self):
         self.p1 = 5
         self.p2 = 10
@@ -256,9 +255,8 @@ class Pressure(BaseFuzzy):
          ax.plot(x_param, y_param_high, color='C3')
          # very high
          y_param_veryhigh = [value_veryhigh, value_veryhigh, 0]
-         ax.plot(x_param, y_param_veryhigh, color='C4')
-        
-# Output
+         ax.plot(x_param, y_param_veryhigh, color='C4')  
+#output
 class Temperature(BaseFuzzy) :
   minimum = 1
   maximum = 2000
@@ -282,20 +280,16 @@ class Temperature(BaseFuzzy) :
   def _freeze(self, a) :
     self.freeze = self.t4 - a * (self.t4 - self.t1)
     return self.freeze
-  
   def _cold(self, a):
         self.cold = self.t3 - a * (self.t3 - self.t2)
         return self.cold
-
   def _warm(self, a):
       self.warm = self.t2 - a * (self.t2 - self.t1)
       return self.warm
-
   def _hot(self, a) :
     self.hot =  a * (self.t4 - self.t1) + self.t1
     return self.hot
-  
-  # freeze
+  # Freeze
   # 0 - t1 = 1
   # t1 - t2 = down
   @property
@@ -309,7 +303,6 @@ class Temperature(BaseFuzzy) :
       return self.down(x)
     else:
       return 0
-  
   # cold
   # t1 - t2 = up
   # t2 - t3 = down
@@ -326,8 +319,7 @@ class Temperature(BaseFuzzy) :
       return self.down(x)
     else:
       return 0
-    
-  # warm 
+  # Warm 
   # t2 - t3 = up
   # t3 - t4 = down
   @property
@@ -344,7 +336,7 @@ class Temperature(BaseFuzzy) :
     else:
       return 0
 
-  # hot
+  # Hot
   # t3 - t4 = up
   # t4 - ... = 1
   @property
@@ -361,78 +353,63 @@ class Temperature(BaseFuzzy) :
     
   def _inferensi(self, spd=Speed(), pres=Pressure()):
     result = []
-    # [R1] JIKA Speed SLOW, dan Pressure VERY LOW, MAKA
-    # output Temprature HOT.
+    # [R1] Jika Speed SLOW, dan Pressure VERY LOW, maka output Temprature HOT.
     a1 = min(spd.slow(self.speed), pres.veryLow(self.pressure))
     z1 = self._hot(a1)
     result.append((a1, z1))
-    # [R2] JIKA Speed STEADY, dan Pressure VERY LOW, MAKA
-    # output Temprature HOT.
+    # [R2] Jika Speed STEADY, dan Pressure VERY LOW, maka output Temprature HOT.
     a2 = min(spd.steady(self.speed), pres.veryLow(self.pressure))
     z2 = self._hot(a2)
     result.append((a2, z2))
-    # [R3] JIKA Speed FAST, dan Pressure VERY LOW, MAKA
-    # output Temprature HOT.
+    # [R3] JIKA Speed FAST, dan Pressure VERY LOW, MAKA output Temprature HOT.
     a3 = min(spd.fast(self.speed), pres.veryLow(self.pressure))
     z3 = self._hot(a3)
     result.append((a3, z3))
-    # [R4] JIKA Speed SLOW, dan Pressure LOW, MAKA
-    # output Temprature HOT.
+    # [R4] JIKA Speed SLOW, dan Pressure LOW, MAKA output Temprature HOT.
     a4 = min(spd.slow(self.speed), pres.low(self.pressure))
     z4 = self._hot(a4)
     result.append((a4, z4))
-    # [R5] JIKA Speed STEADY, dan Pressure LOW, MAKA
-    # output Temprature WARM.
+    # [R5] Jika Speed STEADY, dan Pressure LOW, maka output Temprature WARM.
     a5 = min(spd.steady(self.speed), pres.low(self.pressure))
     z5 = self._warm(a5)
     result.append((a5, z5))
-    # [R6] JIKA Speed FAST, dan Pressure LOW, MAKA
-    # output Temprature WARM.
+    # [R6] Jika Speed FAST, dan Pressure LOW, maka output Temprature WARM.
     a6 = min(spd.fast(self.speed), pres.low(self.pressure))
     z6 = self._warm(a6)
     result.append((a6, z6))
-    # [R7] JIKA Speed SLOW, dan Pressure MEDIUM, MAKA
-    # output Temprature WARM.
+    # [R7] Jika Speed SLOW, dan Pressure MEDIUM, maka output Temprature WARM.
     a7 = min(spd.slow(self.speed), pres.medium(self.pressure))
     z7 = self._warm(a7)
     result.append((a7, z7))
-    # [R8] JIKA Speed STEADY, dan Pressure MEDIUM, MAKA
-    # output Temprature WARM.
+    # [R8] Jika Speed STEADY, dan Pressure MEDIUM, maka output Temprature WARM.
     a8 = min(spd.steady(self.speed), pres.medium(self.pressure))
     z8 = self._warm(a8)
     result.append((a8, z8))
-    # [R9] JIKA Speed FAST, dan Pressure MEDIUM, MAKA
-    # output Temprature COLD.
+    # [R9] Jika Speed FAST, dan Pressure MEDIUM, maka output Temprature COLD.
     a9 = min(spd.fast(self.speed), pres.medium(self.pressure))
     z9 = self._cold(a9)
     result.append((a9, z9))
-    # [R10] JIKA Speed SLOW, dan Pressure HIGH, MAKA
-    # output Temprature COLD.
+    # [R10] Jika Speed SLOW, dan Pressure HIGH, Mmaka output Temprature COLD.
     a10 = min(spd.slow(self.speed), pres.high(self.pressure))
     z10 = self._cold(a10)
     result.append((a10, z10))
-    # [R11] JIKA Speed STEADY, dan Pressure HIGH, MAKA
-    # output Level COLD.
+    # [R11] Jika Speed STEADY, dan Pressure HIGH, maka output Level COLD.
     a11 = min(spd.steady(self.speed), pres.high(self.pressure))
     z11 = self._cold(a11)
     result.append((a11, z11))
-    # [R12] JIKA Speed FAST, dan Pressure HIGH, MAKA
-    # output Level COLD.
+    # [R12] Jika Speed FAST, dan Pressure HIGH, maka output Level COLD.
     a12 = min(spd.fast(self.speed), pres.high(self.pressure))
     z12 = self._cold(a12)
     result.append((a12, z12))
-    # [R13] JIKA Speed SLOW, dan Pressure VERY HIGH, MAKA
-    # output Level FREEZE.
+    # [R13] Jika Speed SLOW, dan Pressure VERY HIGH, maka output Level FREEZE.
     a13 = min(spd.slow(self.speed), pres.veryHigh(self.pressure))
     z13 = self._freeze(a13)
     result.append((a13, z13))
-    # [R14] JIKA Speed STEADY, dan Pressure VERY HIGH, MAKA
-    # output Level FREEZE.
+    # [R14] Jika Speed STEADY, dan Pressure VERY HIGH, maka output Level FREEZE.
     a14 = min(spd.steady(self.speed), pres.veryHigh(self.pressure))
     z14 = self._freeze(a14)
     result.append((a14, z14))
-    # [R15] JIKA Speed FAST, dan Pressure VERY HIGH, MAKA
-    # output Level FREEZE.
+    # [R15] Jika Speed FAST, dan Pressure VERY HIGH, maka output Level FREEZE.
     a15 = min(spd.fast(self.speed), pres.veryHigh(self.pressure))
     z15 = self._freeze(a15)
     result.append((a15, z15))
@@ -497,19 +474,19 @@ class Temperature(BaseFuzzy) :
     if self.real_value:
       value = self.real_value
       x_param = [0, value, value]
-      # freeze
+      #Freeze
       frz_value = self.fuzzy_freeze
       y_param_frz = [frz_value, frz_value, 0]
       ax3.plot(x_param, y_param_frz, color='C0')
-      # cold
+      #Cold
       cld_value = self.fuzzy_cold
       y_param_cld = [cld_value, cld_value, 0]
       ax3.plot(x_param, y_param_cld, color='C1')
-      # warm
+      #Warm
       wrm_value = self.fuzzy_warm
       y_param_wrm = [wrm_value, wrm_value, 0]
       ax3.plot(x_param, y_param_wrm, color='C2')
-      # hot
+      #Hot
       hot_value = self.fuzzy_hot
       y_param_hot = [hot_value, hot_value, 0]
       ax3.plot(x_param, y_param_hot, color='C3')
@@ -522,8 +499,8 @@ speed = input('Speed : ')
 pressure = input('Pressure : ') 
 temperature = Temperature()
 
-# SPEED MAX = 80
-# PRESSURE MAX = 40
+# Speed MAX = 80
+# Pressure MAX = 40
 temperature.speed = float(speed)
 temperature.pressure = float(pressure)
 hasil_temprature = temperature.defuzifikasi()
